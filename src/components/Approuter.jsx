@@ -5,6 +5,7 @@ import Body from './Body';
 import Contact from './Contact';    
 import About from './About';
 import Error from './Error';
+import Menu from './Menu';
 
 const Approuter = createBrowserRouter([
 
@@ -26,6 +27,10 @@ const Approuter = createBrowserRouter([
             path : "contact",
             element: <Contact/>
             },
+            {
+                path : "restaurants/:resId",
+                element : <Menu/>
+            }
 
         ]
     }
