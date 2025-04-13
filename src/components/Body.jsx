@@ -54,8 +54,8 @@ const Body = () => {
   const handleSearch = () => {
     const matchedResults = restaurantList.filter(
       (res) =>
-        res.name.toLowerCase().includes(searchText) ||
-        res.cuisines.toLowerCase().includes(searchText)
+        res.name.toLowerCase().includes(searchText.trim().toLowerCase()) ||
+        res.cuisines.toLowerCase().includes(searchText.trim().toLowerCase())
     );
     setFilteredList(matchedResults);
   };
@@ -64,27 +64,33 @@ const Body = () => {
     <Shimmer />
   ) : (
     <>
-      <div>
+    <section className="flex flex-col md:flex-row gap-4 p-4 items-center justify-between">
+      <div className="w-full md:w-[60%] flex flex-col sm:flex-row items-center gap-2">
         <input
           type="text"
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
+          onKeyDown={(e)=> e.key === "Enter" && handleSearch()} 
           placeholder="Search For restaurants and food"
+          className="flex-1 px-3 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
         />
-        <button onClick={handleSearch}>Search</button>
+        <button onClick={handleSearch} className="px-4 py-2 text-sm bg-blue-600 text-white rounded hover:bg-blue-700 transition cursor-pointer">Search</button>
       </div>
+      <div className="flex gap-2 flex-wrap justify-center">
       <button
         onClick={filterTopRatedRestaurants}
-        className="border-2 px-1 py-2 cursor-pointer "
+        className="px-4 py-2 text-sm border border-gray-400 rounded hover:bg-gray-100 transition cursor-pointer"
       >
         Top Rated Restaurants
       </button>
       <button
-        className="px-1 py-2 border-2"
+        className="px-4 py-2 text-sm border border-gray-400 rounded hover:bg-gray-100 transition cursor-pointer"
         onClick={() => setFilteredList(restaurantList)}
       >
         Reset
       </button>
+      </div>
+      </section>
       <div className="flex flex-wrap gap-4 justify-center">
         {filteredList.map((restaurant) => (
           <RestaurantCard key={restaurant.id} restaurant={restaurant} />
