@@ -1,7 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { useOnlineStatus } from '../utils/useOnlineStatus'
 
 const Header = () => {
+  const onlineStatus = useOnlineStatus();
   return (
     <section className='flex items-center justify-between px-10 py-3 shadow-md'>
         <div className='flex items-center'>
@@ -9,6 +11,7 @@ const Header = () => {
             <span className='ms-3 text-2xl font-bold'>DevDine</span>
         </div>
         <ul className='flex items-center justify-center gap-5'>
+          <li>Online : {onlineStatus ? "🟢" : "🔴"}</li>
             <li><Link to = "/">Home</Link></li>
             <li><Link to="about">About</Link></li>
             <li><Link to="contact">Contact</Link></li>
