@@ -6,6 +6,7 @@ import Contact from './Contact';
 import About from './About';
 import Error from './Error';
 import Menu from './Menu';
+import Profile from './Profile';
 
 const Approuter = createBrowserRouter([
 
@@ -21,7 +22,13 @@ const Approuter = createBrowserRouter([
            
             {
                 path : "about",
-                element:<About/>
+                element:<About/>,
+                children:[
+                    {
+                        path:"profile",
+                        element:<Profile/>
+                    }
+                ]
             },
             {
             path : "contact",
