@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { createBrowserRouter } from 'react-router-dom'
 import App from '../App';
 import Body from './Body';
@@ -7,6 +7,8 @@ import About from './About';
 import Error from './Error';
 import Menu from './Menu';
 import Profile from './Profile';
+import Cart from './Cart';
+import Login from './Login'
 
 const Approuter = createBrowserRouter([
 
@@ -37,6 +39,14 @@ const Approuter = createBrowserRouter([
             {
                 path : "restaurants/:resId",
                 element : <Menu/>
+            },
+            {
+                path : "cart",
+                element : <Cart/>
+            },
+            {
+                path : "login",
+                element : <Login/>
             }
 
         ]

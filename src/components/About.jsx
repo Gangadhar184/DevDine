@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import burgerImage from "../../public/burgerImage.png";
+import  { useState } from 'react'
+import burgerImage from '../assets/burgerImage.png'
 import { Link, Outlet } from 'react-router-dom';
 
 const About = () => {

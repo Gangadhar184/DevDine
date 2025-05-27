@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import contactUs from "../../public/contactUs.png"
+import { useState } from 'react'
+import contactUs from "../assets/contactUs.png"
 
 const Contact = () => {
   const [message, setMessage] = useState(false);
@@ -20,6 +20,7 @@ const Contact = () => {
           <input type="email" placeholder="Email" required />
           <textarea placeholder="Type your Message here..." required></textarea>
           <button type="submit">Submit</button>
+        
           {message && (
             <span>Thanks for contacting FoodFire, We will reply ASAP.</span>
           )}

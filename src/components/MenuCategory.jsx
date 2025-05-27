@@ -1,4 +1,4 @@
-import React from 'react';
+
 import MenuItemCard from './MenuItemCard';
 
 const MenuCategory = ({ category, filterType }) => {

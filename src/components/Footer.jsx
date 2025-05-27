@@ -1,4 +1,3 @@
-import React from 'react'
 import {GITHUB_LINK} from '../constants/constants'
 
 const Footer = () => {
