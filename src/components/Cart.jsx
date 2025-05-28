@@ -21,6 +21,13 @@ const Cart = () => {
       }
     });
   };
+
+  const getTotalPrice = () => {
+    return cartItems.reduce((total, item) => {
+      const itemPrice = item.price || item.defaultPrice || 0;
+      return total + itemPrice * item.quantity;
+    }, 0)
+  }
   return (
     <div>
       <h1 className="w-full text-center text-2xl font-bold border-b-2 border-blue-600 mb-[30px]">
@@ -33,17 +40,20 @@ const Cart = () => {
         Clear Cart
       </button>
       <div className="w-full shadow-md px-[20px] bg-gray-50 rounded-md py-[10px] my-[30px]">
-        {
-          cartItems.length === 0 && (
-            <div className="text-center text-2xl font-bold">
-              Your cart is empty! Add items to your cart.
+        {cartItems.length > 0 ? (
+          <>
+            {cartItems.map((item) => (
+              <MenuItemCard key={item.id} item={item} showQuantityControls />
+            ))}
+            <div className="text-right text-xl font-semibold text-green-700 pr-5 mt-4">
+              Total: ₹{(getTotalPrice() / 100).toFixed(2)}
             </div>
-          )
-        }
-
-        {cartItems.map((item) => (
-          <MenuItemCard key={item.id} item={item} showRemove />
-        ))}
+          </>
+        ) : (
+          <div className="text-center text-2xl font-bold">
+            Your cart is empty! Add items to your cart.
+          </div>
+        )}
       </div>
     </div>
   )

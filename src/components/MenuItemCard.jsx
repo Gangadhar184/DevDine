@@ -1,17 +1,17 @@
 
 import { MdStarRate } from 'react-icons/md';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
 import { addItem, removeItem } from '../slices/cartSlice';
 
 const IMG_CDN_URL = 'https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300/';
 
-const MenuItemCard = ({ item, showRemove = false }) => {
+const MenuItemCard = ({ item, showQuantityControls = false }) => {
 
   //dispatch - It is a function that sends actions to store
 
   const dispatch = useDispatch();
-  const cardItems = useSelector((state) => state.cart.items);
+  // const cardItems = useSelector((state) => state.cart.items);
 
   const {
     name,
@@ -20,7 +20,10 @@ const MenuItemCard = ({ item, showRemove = false }) => {
     ratings,
     imageId,
     description,
+    quantity = 0,
   } = item;
+
+  console.log(item);
 
   const handleAddToCart = () => {
     Swal.fire({
@@ -30,11 +33,20 @@ const MenuItemCard = ({ item, showRemove = false }) => {
       denyButtonText: "No"
     }).then((result) => {
       if (result.isConfirmed) {
-        // Swal.fire("Saved!", "", "success");
-
-        // Add item to cart - Dispatching an action
         dispatch(addItem(item));
-        // {payload: "Pizzaa", type: "cart/addItem"}
+      }
+    })
+  }
+
+  const handleRemoveFromCart = () => {
+    Swal.fire({
+      title: "Do you want to Remove Item from the Cart ?",
+      showDenyButton: true,
+      confirmButtonText: "Yes",
+      denyButtonText: "No"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(removeItem(item))
       }
     })
   }
@@ -70,19 +82,34 @@ const MenuItemCard = ({ item, showRemove = false }) => {
             className="w-full h-28 object-cover rounded-lg mb-2 shadow"
           />
         )}
-        <button onClick={() => handleAddToCart(item)} className="w-full bg-green-600 hover:bg-green-700 text-white text-sm font-medium py-1.5 rounded">
-          ADD
-        </button>
+
         {
-          showRemove && (
-            <button
-              onClick={() => dispatch(removeItem(item))}
-              className="w-full bg-red-600 hover:bg-red-700 text-white text-sm font-medium py-1.5 rounded mt-2"
-            >
-              REMOVE
+          !showQuantityControls ? (
+            <button onClick={() => handleAddToCart(item)} className="w-full bg-green-600 hover:bg-green-700 text-white text-sm font-medium py-1.5 rounded">
+              ADD
             </button>
+          ) : (
+            <div className="flex items-center justify-between gap-2 bg-gray-200 px-3 py-1 rounded">
+              <button
+                onClick={handleRemoveFromCart}
+                className="text-lg text-red-600 font-bold px-2"
+              >
+                –
+              </button>
+              <span className="text-base font-medium">{quantity}</span>
+              <button
+                onClick={handleAddToCart}
+                className="text-lg text-green-600 font-bold px-2"
+              >
+                +
+              </button>
+            </div>
           )
         }
+
+
+
+
       </div>
     </div>
   );
