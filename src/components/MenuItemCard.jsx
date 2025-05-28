@@ -106,10 +106,6 @@ const MenuItemCard = ({ item, showQuantityControls = false }) => {
             </div>
           )
         }
-
-
-
-
       </div>
     </div>
   );

@@ -30,8 +30,8 @@ const Cart = () => {
   }
   return (
     <div>
-      <h1 className="w-full text-center text-2xl font-bold border-b-2 border-blue-600 mb-[30px]">
-        Cart
+      <h1 className="w-full text-left text-2xl font-bold mt-2  mb-[30px]">
+         Shopping Cart
       </h1>
       <button
         className="py-[3px] px-[10px] text-[1.2rem] text-[#fff] bg-[#E46F20] rounded-[8px] border-none hover:bg-[#016034]"

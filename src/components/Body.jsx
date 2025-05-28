@@ -6,7 +6,7 @@ import { useOnlineStatus } from "../utils/useOnlineStatus";
 import { Link } from "react-router-dom";
 
 const Body = () => {
-  
+
   const [restaurantList, setRestaurantList] = useState([]);
   const [filteredList, setFilteredList] = useState([]);
   const [searchText, setSearchText] = useState("");
@@ -72,36 +72,60 @@ const Body = () => {
     <Shimmer />
   ) : (
     <>
-      <section className="flex flex-col md:flex-row gap-4 p-4 items-center justify-between">
-        <div className="w-full md:w-[60%] flex flex-col sm:flex-row items-center gap-2">
-          <input
-            type="text"
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-            placeholder="Search For restaurants and food"
-            className="flex-1 px-3 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-          />
-          <button onClick={handleSearch} className="px-4 py-2 text-sm bg-blue-600 text-white rounded hover:bg-blue-700 transition cursor-pointer">Search</button>
-        </div>
-        <div className="flex gap-2 flex-wrap justify-center">
-          <button
-            onClick={filterTopRatedRestaurants}
-            className="px-4 py-2 text-sm border border-gray-400 rounded hover:bg-gray-100 transition cursor-pointer"
-          >
-            Top Rated Restaurants
-          </button>
-          <button
-            className="px-4 py-2 text-sm border border-gray-400 rounded hover:bg-gray-100 transition cursor-pointer"
-            onClick={() => setFilteredList(restaurantList)}
-          >
-            Reset
-          </button>
+      <section className="w-full p-4">
+        <div className="w-full max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-4">
+
+          {/* Spacer to push search bar to center on large screens */}
+          <div className="hidden md:block md:flex-1" />
+
+          {/* Search Bar - Centered */}
+          <div className="w-full md:w-[40%] flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+            <input
+              type="text"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+              placeholder="Search For restaurants and food"
+              className="w-full sm:flex-1 px-3 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+            />
+            <button
+              onClick={handleSearch}
+              className="w-full sm:w-auto px-4 py-2 text-sm bg-blue-600 text-white rounded hover:bg-blue-700 transition cursor-pointer"
+            >
+              Search
+            </button>
+          </div>
+
+          <div className="w-full md:w-auto flex flex-col sm:flex-row gap-2 justify-center md:justify-end md:flex-1">
+            <button
+              onClick={filterTopRatedRestaurants}
+              className="w-full sm:w-auto px-4 py-2 text-sm border border-gray-400 rounded hover:bg-gray-100 transition cursor-pointer"
+            >
+              Top Rated Restaurants
+            </button>
+            <button
+              onClick={() => setFilteredList(restaurantList)}
+              className="w-full sm:w-auto px-4 py-2 text-sm border border-gray-400 rounded hover:bg-gray-100 transition cursor-pointer"
+            >
+              Reset
+            </button>
+          </div>
         </div>
       </section>
-      <div className="flex flex-wrap gap-4 justify-center">
+
+
+
+
+      <div className="grid gap-6 px-4 
+                grid-cols-1 
+                sm:grid-cols-2 
+                md:grid-cols-3 
+                lg:grid-cols-4 
+                xl:grid-cols-5">
         {filteredList.map((restaurant) => (
-          <Link key={restaurant.id} to={"/restaurants/" + restaurant.id}><RestaurantCard  restaurant={restaurant} /></Link>
+          <Link key={restaurant.id} to={"/restaurants/" + restaurant.id}>
+            <RestaurantCard restaurant={restaurant} />
+          </Link>
         ))}
       </div>
     </>
