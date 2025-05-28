@@ -3,13 +3,16 @@ import { useOnlineStatus } from '../utils/useOnlineStatus';
 import { useContext, useState } from 'react';
 import UserContext from '../context/UserContext';
 import { Menu, X, ShoppingCart } from 'lucide-react';
+import { useSelector } from 'react-redux';
 
 const Header = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
   const onlineStatus = useOnlineStatus();
   const navigate = useNavigate();
+  const cartItemCount = useSelector((state) => state.cart.items.length);
   const { loggedInUser, setUserName } = useContext(UserContext);
   const isLoggedIn = loggedInUser && loggedInUser !== "Guest User";
-  const [menuOpen, setMenuOpen] = useState(false);
+
 
   const handleLogout = () => {
     setUserName("Guest User");
@@ -31,12 +34,20 @@ const Header = () => {
           <Link to="/">Home</Link>
           <Link to="/about">About</Link>
           <Link to="/contact">Contact</Link>
-          <Link to="/cart" className="flex items-center gap-1">
-            <ShoppingCart size={18} />
+          <Link to="/cart" className="relative flex items-center gap-2">
+            <div className="relative">
+              <ShoppingCart size={20} />
+              {cartItemCount > 0 && (
+                <span className="absolute -top-2 -right-3 bg-red-600 text-white text-xs px-1.5 py-0.5 rounded-full">
+                  {cartItemCount}
+                </span>
+              )}
+            </div>
             <span>Cart</span>
           </Link>
+
           <button
-            className="px-4 py-1 rounded bg-blue-500 text-white hover:bg-blue-600 transition"
+            className="px-4 py-1 rounded bg-blue-500 text-white hover:bg-blue-600 cursor-pointer transition"
             onClick={isLoggedIn ? handleLogout : () => navigate("/login")}
           >
             {isLoggedIn ? "Logout" : "Login"}
@@ -61,11 +72,19 @@ const Header = () => {
           <Link
             to="/cart"
             onClick={() => setMenuOpen(false)}
-            className="flex items-center gap-2"
+            className="relative flex items-center gap-2"
           >
-            <ShoppingCart size={18} />
+            <div className="realtive">
+              <ShoppingCart size={20} />
+              {cartItemCount > 0 && (
+                <span className="absolute -top-2 -right-3 bg-red-600 text-white text-xs px-1.5 py-0.5 rounded-full">
+                  {cartItemCount}
+                </span>
+              )}
+            </div>
             <span>Cart</span>
           </Link>
+
           <button
             className="px-4 py-1 rounded bg-blue-500 text-white hover:bg-blue-600 transition"
             onClick={() => {
