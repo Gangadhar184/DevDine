@@ -4,6 +4,9 @@ import Header from "./components/Header";
 import { Outlet } from "react-router-dom";
 import UserContext from "./context/UserContext";
 
+import {Provider} from "react-redux";
+import appStore from './store/appStore';
+
 const App = () => {
   const [userName, setUserName] = useState();
 
@@ -25,6 +28,8 @@ const App = () => {
   }, [userName]);
 
   return (
+
+    <Provider store={appStore} >
     <UserContext.Provider value={{ loggedInUser: userName, setUserName }}>
       <div>
         <Header />
@@ -32,6 +37,7 @@ const App = () => {
         <Footer />
       </div>
     </UserContext.Provider>
+    </Provider>
   );
 };
 

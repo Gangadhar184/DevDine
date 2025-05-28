@@ -1,9 +1,18 @@
 
 import { MdStarRate } from 'react-icons/md';
+import { useDispatch, useSelector } from 'react-redux';
+import Swal from 'sweetalert2';
+import { addItem, removeItem } from '../slices/cartSlice';
 
 const IMG_CDN_URL = 'https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300/';
 
-const MenuItemCard = ({ item }) => {
+const MenuItemCard = ({ item, showRemove = false }) => {
+
+  //dispatch - It is a function that sends actions to store
+
+  const dispatch = useDispatch();
+  const cardItems = useSelector((state) => state.cart.items);
+
   const {
     name,
     price,
@@ -12,6 +21,23 @@ const MenuItemCard = ({ item }) => {
     imageId,
     description,
   } = item;
+
+  const handleAddToCart = () => {
+    Swal.fire({
+      title: "Do you want to Add Item to the Cart? ",
+      showDenyButton: true,
+      confirmButtonText: "Yes",
+      denyButtonText: "No"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Swal.fire("Saved!", "", "success");
+
+        // Add item to cart - Dispatching an action
+        dispatch(addItem(item));
+        // {payload: "Pizzaa", type: "cart/addItem"}
+      }
+    })
+  }
 
   return (
     <div className="flex flex-col sm:flex-row justify-between gap-6 border-b pb-6">
@@ -44,9 +70,19 @@ const MenuItemCard = ({ item }) => {
             className="w-full h-28 object-cover rounded-lg mb-2 shadow"
           />
         )}
-        <button className="w-full bg-green-600 hover:bg-green-700 text-white text-sm font-medium py-1.5 rounded">
+        <button onClick={() => handleAddToCart(item)} className="w-full bg-green-600 hover:bg-green-700 text-white text-sm font-medium py-1.5 rounded">
           ADD
         </button>
+        {
+          showRemove && (
+            <button
+              onClick={() => dispatch(removeItem(item))}
+              className="w-full bg-red-600 hover:bg-red-700 text-white text-sm font-medium py-1.5 rounded mt-2"
+            >
+              REMOVE
+            </button>
+          )
+        }
       </div>
     </div>
   );
